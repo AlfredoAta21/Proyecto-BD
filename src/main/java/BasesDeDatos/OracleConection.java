@@ -25,14 +25,14 @@ public class OracleConection {
     }
 
     public static void consultarClientes() {
-    String sql = "SELECT c.nombre, c.email FROM TablaClientes c";
+    String sql = "SELECT * FROM TablaClientes c";
 
     try (Connection conn = obtenerConexion();
          Statement stmt = conn.createStatement();
          ResultSet rs = stmt.executeQuery(sql)) {
 
         System.out.println("Clientes registrados:");
-        boolean hayResultados = false; // Bandera para verificar si hay resultados
+        boolean hayResultados = false;
         while (rs.next()) {
             hayResultados = true;
             String nombre = rs.getString("nombre");
