@@ -24,23 +24,23 @@
       <VBox layoutX="270.0" layoutY="104.0" prefHeight="294.0" prefWidth="359.0">
          <children>
             <Pane prefHeight="5.0" prefWidth="359.0" />
-            <TextField fx:id="id" prefHeight="33.0" prefWidth="359.0" promptText="Nombre" />
+            <TextField fx:id="nombre" prefHeight="33.0" prefWidth="359.0" promptText="Nombre" />
             <Pane prefHeight="23.0" prefWidth="359.0" />
-            <TextField fx:id="nombre" prefHeight="33.0" prefWidth="359.0" promptText="Direccion" />
+            <TextField fx:id="direccion" prefHeight="33.0" prefWidth="359.0" promptText="Direccion" />
             <Pane prefHeight="29.0" prefWidth="359.0" />
             <TextField fx:id="telefono" prefHeight="33.0" prefWidth="359.0" promptText="Telefono" />
             <Pane prefHeight="31.0" prefWidth="359.0" />
-            <TextField fx:id="correo" prefHeight="33.0" prefWidth="359.0" promptText="Puesto" />
+            <TextField fx:id="puesto" prefHeight="33.0" prefWidth="359.0" promptText="Puesto" />
             <Pane prefHeight="34.0" prefWidth="359.0" />
-            <TextField fx:id="direccion" prefHeight="33.0" prefWidth="359.0" promptText="Salario" />
+            <TextField fx:id="salario" prefHeight="33.0" prefWidth="359.0" promptText="Salario" />
          </children>
       </VBox>
-      <Label layoutX="303.0" layoutY="34.0" text="Gestionar Empleados">
+      <Label layoutX="301.0" layoutY="7.0" text="Gestionar Empleados">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <Button fx:id="buttonAgregarEmpleado" layoutX="716.0" layoutY="135.0" mnemonicParsing="false" styleClass="buttonAgregarProveedor" text="Agregar Empleado" />
+      <Button fx:id="buttonAgregarEmpleado" layoutX="716.0" layoutY="135.0" mnemonicParsing="false" styleClass="buttonAgregarProveedor" text="Agregar Empleado" onAction="#agregarEmpleado" />
       <TableView fx:id="tableEmpleados" fixedCellSize="50.0" layoutX="63.0" layoutY="413.0" prefHeight="267.0" prefWidth="773.0">
          <columns>
             <TableColumn fx:id="nombreEmpleado" prefWidth="190.0" text="Nombre" />
@@ -50,7 +50,7 @@
             <TableColumn fx:id="salarioEmpleado" prefWidth="128.80002441406248" text="Salario" />
          </columns>
       </TableView>
-      <Button fx:id="buttonModificarEmpleado" layoutX="712.0" layoutY="213.0" mnemonicParsing="false" styleClass="buttonModificarProveedor" text="Modificar Empleado" />
-      <Button fx:id="buttonElimarEmpleado" layoutX="717.0" layoutY="286.0" mnemonicParsing="false" styleClass="buttonEliminarProveedor" text="Eliminar Empleado" />
+      <Button fx:id="buttonModificarEmpleado" layoutX="712.0" layoutY="213.0" mnemonicParsing="false" styleClass="buttonModificarProveedor" text="Modificar Empleado" onAction="#modificarEmpleado" />
+      <Button fx:id="buttonElimarEmpleado" layoutX="717.0" layoutY="286.0" mnemonicParsing="false" styleClass="buttonEliminarProveedor" text="Eliminar Empleado" onAction="#eliminarEmpleado"/>
    </children>
 </AnchorPane>
