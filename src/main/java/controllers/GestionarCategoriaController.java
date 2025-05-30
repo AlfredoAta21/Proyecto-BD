@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -41,9 +42,14 @@ public class GestionarCategoriaController {
     @FXML
     private TableColumn<Categoria, String> descripcionCategoria;
 
+    @FXML
+    private Button buttonModificarCategoria;
+
     private ObservableList<Categoria> categorias;
 
     private Connection connection;
+
+
 
     public void initialize() {
         // Configurar columnas de la tabla
@@ -59,6 +65,17 @@ public class GestionarCategoriaController {
 
         // Cargar datos iniciales
         loadCategorias();
+
+        // Detectar selección en la tabla
+        tablaCategoria.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                id.setText(newValue.getId());
+                nombre.setText(newValue.getNombre());
+                descripcion.setText(newValue.getDescripcion());
+            }
+        });
+
+
     }
 
     private void connectToDatabase() {
@@ -104,10 +121,88 @@ public class GestionarCategoriaController {
             loadCategorias();
 
             // Limpiar campos
+            id.clear();
             nombre.clear();
             descripcion.clear();
+
+            // Mostrar mensaje de éxito
+            mostrarMensaje("Categoría agregada exitosamente.");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void modificarCategoria(ActionEvent event) {
+        Categoria selectedCategoria = tablaCategoria.getSelectionModel().getSelectedItem();
+        if (selectedCategoria == null) {
+            System.out.println("No se ha seleccionado ninguna categoría.");
+            return;
+        }
+
+        String idText = id.getText();
+        String nombreText = nombre.getText();
+        String descripcionText = descripcion.getText();
+
+        try {
+            String query = "UPDATE TablaCategorias SET nombre = ?, descripcion = ? WHERE ROWID = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, nombreText);
+            statement.setString(2, descripcionText);
+            statement.setString(3, idText);
+            statement.executeUpdate();
+
+            // Recargar datos en la tabla
+            loadCategorias();
+
+            // Limpiar campos
+            id.clear();
+            nombre.clear();
+            descripcion.clear();
+
+            // Mostrar mensaje de éxito
+            mostrarMensaje("Categoría modificada exitosamente.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void eliminarCategoria(ActionEvent event) {
+        Categoria selectedCategoria = tablaCategoria.getSelectionModel().getSelectedItem();
+        if (selectedCategoria == null) {
+            System.out.println("No se ha seleccionado ninguna categoría.");
+            return;
+        }
+
+        String idText = selectedCategoria.getId();
+
+        try {
+            String query = "DELETE FROM TablaCategorias WHERE ROWID = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, idText);
+            statement.executeUpdate();
+
+            // Recargar datos en la tabla
+            loadCategorias();
+
+            // Limpiar campos
+            id.clear();
+            nombre.clear();
+            descripcion.clear();
+
+            // Mostrar mensaje de éxito
+            mostrarMensaje("Categoría eliminada exitosamente.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Operación exitosa");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

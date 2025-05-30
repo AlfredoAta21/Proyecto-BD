@@ -44,7 +44,7 @@
             <TableColumn fx:id="descripcionCategoria" prefWidth="403.5" text="Descripción" />
          </columns>
       </TableView>
-      <Button fx:id="buttonModificarCategoria" layoutX="712.0" layoutY="213.0" mnemonicParsing="false" styleClass="buttonModificarProveedor" text="Modificar Categoria" />
-      <Button fx:id="buttonEliminarCategoria" layoutX="717.0" layoutY="286.0" mnemonicParsing="false" styleClass="buttonEliminarProveedor" text="Eliminar Categoria" />
+      <Button fx:id="buttonModificarCategoria" layoutX="712.0" layoutY="213.0" mnemonicParsing="false" styleClass="buttonModificarProveedor" text="Modificar Categoria" onAction="#modificarCategoria" />
+      <Button fx:id="buttonEliminarCategoria" layoutX="717.0" layoutY="286.0" mnemonicParsing="false" styleClass="buttonEliminarProveedor" text="Eliminar Categoria" onAction="#eliminarCategoria"/>
    </children>
 </AnchorPane>

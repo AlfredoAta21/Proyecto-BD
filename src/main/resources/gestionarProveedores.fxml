@@ -28,11 +28,11 @@
             <Pane prefHeight="23.0" prefWidth="359.0" />
             <TextField fx:id="nombre" prefHeight="33.0" prefWidth="359.0" promptText="Nombre" />
             <Pane prefHeight="29.0" prefWidth="359.0" />
-            <TextField fx:id="telefono" prefHeight="33.0" prefWidth="359.0" promptText="Contacto" />
+            <TextField fx:id="contacto" prefHeight="33.0" prefWidth="359.0" promptText="Contacto" />
             <Pane prefHeight="31.0" prefWidth="359.0" />
-            <TextField fx:id="correo" prefHeight="33.0" prefWidth="359.0" promptText="Direccion" />
+            <TextField fx:id="direccion" prefHeight="33.0" prefWidth="359.0" promptText="Direccion" />
             <Pane prefHeight="34.0" prefWidth="359.0" />
-            <TextField fx:id="direccion" prefHeight="33.0" prefWidth="359.0" promptText="Telefono" />
+            <TextField fx:id="telefono" prefHeight="33.0" prefWidth="359.0" promptText="Telefono" />
          </children>
       </VBox>
       <Label layoutX="303.0" layoutY="34.0" text="Agregar Proveedor">
@@ -40,17 +40,19 @@
             <Font size="27.0" />
          </font>
       </Label>
-      <Button fx:id="buttonAgregarProveedor" layoutX="716.0" layoutY="135.0" mnemonicParsing="false" styleClass="buttonAgregarProveedor" text="Agregar Proveedor" />
+      <Button fx:id="buttonAgregarProveedor" layoutX="716.0" layoutY="135.0" mnemonicParsing="false" styleClass="buttonAgregarProveedor" text="Agregar Proveedor" onAction="#agregarProveedor"/>
       <TableView fx:id="tableProveedores" fixedCellSize="50.0" layoutX="63.0" layoutY="413.0" prefHeight="267.0" prefWidth="773.0">
          <columns>
             <TableColumn fx:id="idProveedor" prefWidth="190.0" text="Id" />
             <TableColumn fx:id="nombreProveedor" prefWidth="178.4000244140625" text="Nombre Proveedor" />
-            <TableColumn fx:id="telefonoProveedor" prefWidth="133.60003662109375" text="Telefono" />
-            <TableColumn fx:id="correoProveedor" prefWidth="140.00006103515625" text="Correo" />
+            <TableColumn fx:id="contactoProveedor" prefWidth="140.00006103515625" text="Contacto" />
             <TableColumn fx:id="direccionProveedor" prefWidth="128.80002441406248" text="Direccion" />
+            <TableColumn fx:id="telefonoProveedor" prefWidth="133.60003662109375" text="Telefono" />
+
+
          </columns>
       </TableView>
-      <Button fx:id="buttonModificarProveedor" layoutX="712.0" layoutY="213.0" mnemonicParsing="false" styleClass="buttonModificarProveedor" text="Modificar Proveedor" />
-      <Button fx:id="buttonElimarProveedor" layoutX="717.0" layoutY="286.0" mnemonicParsing="false" styleClass="buttonEliminarProveedor" text="Eliminar Proveedor" />
+      <Button fx:id="buttonModificarProveedor" layoutX="712.0" layoutY="213.0" mnemonicParsing="false" styleClass="buttonModificarProveedor" text="Modificar Proveedor" onAction="#modificarProveedor" />
+      <Button fx:id="buttonElimarProveedor" layoutX="717.0" layoutY="286.0" mnemonicParsing="false" styleClass="buttonEliminarProveedor" text="Eliminar Proveedor" onAction="#eliminarProveedor" />
    </children>
 </AnchorPane>
