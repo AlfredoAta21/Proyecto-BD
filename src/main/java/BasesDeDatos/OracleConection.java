@@ -25,27 +25,27 @@ public class OracleConection {
     }
 
     public static void consultarClientes() {
-    String sql = "SELECT * FROM TablaClientes c";
+        String sql = "SELECT * FROM TablaClientes c";
 
-    try (Connection conn = obtenerConexion();
-         Statement stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection conn = obtenerConexion();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
-        System.out.println("Clientes registrados:");
-        boolean hayResultados = false;
-        while (rs.next()) {
-            hayResultados = true;
-            String nombre = rs.getString("nombre");
-            String email = rs.getString("email");
-            System.out.println("Nombre: " + nombre + ", Email: " + email);
+            System.out.println("Clientes registrados:");
+            boolean hayResultados = false;
+            while (rs.next()) {
+                hayResultados = true;
+                String nombre = rs.getString("nombre");
+                String email = rs.getString("email");
+                System.out.println("Nombre: " + nombre + ", Email: " + email);
+            }
+
+            if (!hayResultados) {
+                System.out.println("No se encontraron clientes en la base de datos.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al consultar clientes: " + e.getMessage());
         }
-
-        if (!hayResultados) {
-            System.out.println("No se encontraron clientes en la base de datos.");
-        }
-
-    } catch (SQLException e) {
-        System.err.println("Error al consultar clientes: " + e.getMessage());
     }
-}
 }

@@ -36,7 +36,7 @@
             <Font size="27.0" />
          </font>
       </Label>
-      <Button fx:id="buttonAgregarCategoria" layoutX="716.0" layoutY="135.0" mnemonicParsing="false" styleClass="buttonAgregarProveedor" text="Agregar Categoria" />
+      <Button fx:id="buttonAgregarCategoria" layoutX="716.0" layoutY="135.0" mnemonicParsing="false" styleClass="buttonAgregarProveedor" text="Agregar Categoria" onAction="#agregarCategoria" />
       <TableView fx:id="tablaCategoria" fixedCellSize="50.0" layoutX="63.0" layoutY="413.0" prefHeight="267.0" prefWidth="773.0">
          <columns>
             <TableColumn fx:id="idCategoria" prefWidth="108.0" text="Id" />
