@@ -56,4 +56,48 @@ public class MongoConection {
             System.err.println("Error al insertar compra en MongoDB: " + e.getMessage());
         }
     }
+
+    public static void insertarProducto(String nombre, String rowId, String rutaImagen) {
+        try {
+            if (database == null) {
+                connect();
+            }
+
+            MongoCollection<Document> coleccionProductos = database.getCollection("productos");
+
+            Document doc = new Document("nombre", nombre)
+                    .append("oracle_rowid", rowId)
+                    .append("ruta_imagen", rutaImagen != null ? rutaImagen : "Sin imagen");
+
+            coleccionProductos.insertOne(doc);
+
+            System.out.println("Producto insertado en MongoDB.");
+        } catch (Exception e) {
+            System.err.println("Error al insertar producto en MongoDB: " + e.getMessage());
+        }
+    }
+
+    public static String recuperarImagen(String rowId) {
+        try {
+            if (database == null) {
+                connect();
+            }
+
+            MongoCollection<Document> coleccionProductos = database.getCollection("productos");
+
+            Document filtro = new Document("oracle_rowid", rowId);
+            Document resultado = coleccionProductos.find(filtro).first();
+
+            if (resultado != null) {
+                return resultado.getString("ruta_imagen");
+            } else {
+                System.out.println("No se encontró un producto con el Row ID proporcionado.");
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error al recuperar la imagen del producto: " + e.getMessage());
+            return null;
+        }
+    }
+
 }

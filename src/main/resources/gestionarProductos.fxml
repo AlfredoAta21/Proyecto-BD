@@ -6,6 +6,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -14,7 +16,7 @@
    <children>
       <Pane layoutX="-76.0" layoutY="-4.0" prefHeight="706.0" prefWidth="914.0">
          <children>
-            <Button fx:id="buttonAgregarProducto" layoutX="688.0" layoutY="131.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="165.0" text="Agregar Producto" textFill="#1f201f" onAction="#agregarProducto"/>
+            <Button fx:id="buttonAgregarProducto" layoutX="689.0" layoutY="55.0" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="44.0" prefWidth="165.0" styleClass="buttonAgregarProveedor" stylesheets="@styles_AgregarProveedor.css" text="Agregar Producto" textFill="#1f201f" />
             <VBox layoutX="105.0" layoutY="51.0" prefHeight="432.0" prefWidth="203.0">
                <children>
                   <Label prefHeight="63.0" prefWidth="206.0" text="id:" />
@@ -48,9 +50,9 @@
                   <ComboBox fx:id="proveedores" prefHeight="33.0" prefWidth="359.0" promptText="Proveedores" visibleRowCount="2" />
                </children>
             </VBox>
-            <Button fx:id="buttonModificarProducto" layoutX="688.0" layoutY="199.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="165.0" text="Modificar Producto" textFill="#393b39" onAction="#modificarProducto"/>
-            <Button fx:id="buttonEliminarProducto" layoutX="688.0" layoutY="267.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="165.0" text="Eliminar Producto" textFill="#393b39" onAction="#eliminarProducto" />
-            <TableView fx:id="tableProductos" fixedCellSize="50.0" layoutX="87.0" layoutY="494.0" prefHeight="175.0" prefWidth="886.0" onMouseClicked="#seleccionarProducto">
+            <Button fx:id="buttonModificarProducto" layoutX="689.0" layoutY="123.0" mnemonicParsing="false" onAction="#modificarProducto" prefHeight="44.0" prefWidth="165.0" styleClass="buttonModificarProveedor" stylesheets="@styles_AgregarProveedor.css" text="Modificar Producto" textFill="#393b39" />
+            <Button fx:id="buttonEliminarProducto" layoutX="689.0" layoutY="191.0" mnemonicParsing="false" onAction="#eliminarProducto" prefHeight="44.0" prefWidth="165.0" styleClass="buttonEliminarProveedor" stylesheets="@styles_AgregarProveedor.css" text="Eliminar Producto" textFill="#393b39" />
+            <TableView fx:id="tableProductos" fixedCellSize="50.0" layoutX="98.0" layoutY="517.0" onMouseClicked="#seleccionarProducto" prefHeight="157.0" prefWidth="814.0">
                <columns>
                   <TableColumn fx:id="colidProducto" prefWidth="59.999969482421875" text="Id" />
                   <TableColumn fx:id="colNombreProducto" prefWidth="156.0000457763672" text="Nombre Producto" />
@@ -61,6 +63,12 @@
                   <TableColumn fx:id="colProveedorProducto" prefWidth="118.4000244140625" text="Proveedor" />
                </columns>
             </TableView>
+            <ImageView fx:id="SubirImagen" fitHeight="173.0" fitWidth="227.0" layoutX="685.0" layoutY="310.0" onMouseClicked="#subirImagen" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagenes/10608872.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="704.0" layoutY="267.0" prefHeight="30.0" prefWidth="136.0" text="Agregar una imagen" />
          </children>
       </Pane>
    </children>

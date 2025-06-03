@@ -1,16 +1,27 @@
 package controllers;
 
+import BasesDeDatos.MongoConection;
+import com.mongodb.client.MongoCollection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import org.bson.Document;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 
 public class GestionarProductosController {
 
@@ -44,6 +55,13 @@ public class GestionarProductosController {
     private Connection connection;
 
     private ObservableList<Producto> productos;
+
+    @FXML
+    private ImageView SubirImagen;
+
+    private String rutaImagenActual;
+
+    private MongoConection mongoConection = new MongoConection();
 
     public void initialize() {
         // Configurar columnas de la tabla
@@ -183,8 +201,19 @@ public class GestionarProductosController {
             categorias.getSelectionModel().clearSelection();
             proveedores.getSelectionModel().clearSelection();
 
-            // Mostrar mensaje de éxito
-            mostrarMensaje("Producto agregado exitosamente.");
+            // Obtener el ROWID del producto recién insertado
+            String queryRowId = "SELECT ROWID FROM TablaProductos WHERE nombre = ? AND descripcion = ?";
+            PreparedStatement stmtRowId = connection.prepareStatement(queryRowId);
+            stmtRowId.setString(1, nombre);
+            stmtRowId.setString(2, descripcion);
+            ResultSet rsRowId = stmtRowId.executeQuery();
+            // Subir producto a MongoDB
+            if (rsRowId.next()) {
+                String rowId = rsRowId.getString("ROWID");
+
+                // Llamar a MongoConection para insertar el producto
+                MongoConection.insertarProducto(nombre, rowId, rutaImagenActual);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -308,4 +337,49 @@ public class GestionarProductosController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+    @FXML
+    private void subirImagen() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar imagen");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Archivos de imagen", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        File archivoSeleccionado = fileChooser.showOpenDialog(SubirImagen.getScene().getWindow());
+
+        if (archivoSeleccionado != null) {
+            try {
+                String nombre = nombreProducto.getText().trim();
+                if (nombre.isEmpty()) {
+                    mostrarMensaje("Primero debes ingresar el nombre del producto.");
+                    return;
+                }
+
+                File carpetaDestino = new File("src/main/resources/imagenes");
+                if (!carpetaDestino.exists()) {
+                    carpetaDestino.mkdirs();
+                }
+
+                // Obtener la extensión del archivo original
+                String extension = archivoSeleccionado.getName().substring(archivoSeleccionado.getName().lastIndexOf("."));
+                String nombreArchivo = nombre.replaceAll("[^a-zA-Z0-9]", "_") + extension; // Nombre seguro
+                File destino = new File(carpetaDestino, nombreArchivo);
+                rutaImagenActual = destino.getPath();
+
+                Files.copy(archivoSeleccionado.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                Image imagen = new Image(new FileInputStream(destino));
+                SubirImagen.setImage(imagen);
+
+                mostrarMensaje("Imagen subida con éxito: " + nombreArchivo);
+            } catch (Exception e) {
+                e.printStackTrace();
+                mostrarMensaje("Error al subir la imagen.");
+            }
+        }
+    }
+
+
+
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import BasesDeDatos.MongoConection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,12 +18,21 @@ public class CartaProductoController {
         cartaNombre.setText(producto.getNombre());
         cartaPrecio.setText("$" + producto.getPrecio());
 
-//        if (producto.getImagen() != null) {
-//            ByteArrayInputStream bis = new ByteArrayInputStream(producto.getImagen());
-//            imagen.setImage(new Image(bis));
-//        } else {
-//            imagen.setImage(null); // o una imagen por defecto si quieres
-//        }
+
+        String rutaImagen = MongoConection.recuperarImagen(producto.getId());
+
+        if (rutaImagen != null && !rutaImagen.equals("Sin imagen")) {
+            try {
+                Image imagenProducto = new Image("file:" + rutaImagen);
+                imagen.setImage(imagenProducto);
+            } catch (Exception e) {
+                System.err.println("Error al cargar la imagen: " + e.getMessage());
+            }
+        } else {
+            System.out.println("No hay imagen para este producto.");
+            // Opcional: cargar una imagen por defecto
+            imagen.setImage(new Image("file:resources/images/no-image.png"));
+        }
     }
 
-}
+            }
