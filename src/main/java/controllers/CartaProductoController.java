@@ -15,14 +15,14 @@ public class CartaProductoController {
 
     public void setProducto(Producto producto) {
         cartaNombre.setText(producto.getNombre());
-        cartaPrecio.setText("$" + producto.getPrecioVenta());
+        cartaPrecio.setText("$" + producto.getPrecio());
 
-        if (producto.getImagen() != null) {
-            ByteArrayInputStream bis = new ByteArrayInputStream(producto.getImagen());
-            imagen.setImage(new Image(bis));
-        } else {
-            imagen.setImage(null); // o una imagen por defecto si quieres
-        }
+//        if (producto.getImagen() != null) {
+//            ByteArrayInputStream bis = new ByteArrayInputStream(producto.getImagen());
+//            imagen.setImage(new Image(bis));
+//        } else {
+//            imagen.setImage(null); // o una imagen por defecto si quieres
+//        }
     }
 
 }

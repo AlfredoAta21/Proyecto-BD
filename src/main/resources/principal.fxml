@@ -24,7 +24,7 @@
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
             <Pane id="Pane" prefHeight="77.0" prefWidth="225.0" styleClass="Pane" stylesheets="styles_principal.css" />
-            <Button id="buttonOpciones" mnemonicParsing="false" prefHeight="43.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Principal" />
+            <Button id="buttonOpciones" mnemonicParsing="false" onAction="#handlerVentas" prefHeight="43.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Principal" />
             <Button id="buttonOpciones" mnemonicParsing="false" onAction="#handleAgregarProducto" prefHeight="48.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Producto" />
             <Button id="buttonOpciones" mnemonicParsing="false" onAction="#handleAgregarProvedor" prefHeight="44.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Agregar Proveedor" />
             <Button id="buttonOpciones" mnemonicParsing="false" onAction="#handleAgregarCategoria" prefHeight="44.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Agregar Categoria" />

@@ -156,8 +156,10 @@ public class GestionarProductosController {
             rsProveedor.next();
             Object refProveedor = rsProveedor.getObject(1);
 
-            // Insertar producto
-            String query = "INSERT INTO TablaProductos (nombre, precio, cantidad, descripcion, categoria_ref, proveedor_ref) VALUES (?, ?, ?, ?, ?, ?)";
+            // Insertar producto con disponibilidad en 1
+            String query = "INSERT INTO TablaProductos " +
+                    "(nombre, precio, cantidad, descripcion, categoria_ref, proveedor_ref, disponible) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, nombre);
             statement.setDouble(2, precio);
@@ -165,6 +167,8 @@ public class GestionarProductosController {
             statement.setString(4, descripcion);
             statement.setObject(5, refCategoria);
             statement.setObject(6, refProveedor);
+            statement.setInt(7, 1); // disponible = 1 (true)
+
             statement.executeUpdate();
 
             // Recargar productos

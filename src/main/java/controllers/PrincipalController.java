@@ -114,7 +114,17 @@ public class PrincipalController {
         }
     }
 
-
+    @FXML
+    void handlerVentas(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventaVista.fxml"));
+            Parent root = loader.load();
+            contenedor.getChildren().clear();
+            contenedor.getChildren().add(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

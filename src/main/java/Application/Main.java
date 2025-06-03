@@ -28,6 +28,10 @@ public class Main extends Application {
             System.err.println("Error al conectar a la base de datos: " + e.getMessage());
             return;
         }
+
+        MongoConection mongoConection = new MongoConection();
+        mongoConection.connect();
+
         oracleConection.consultarClientes();
         launch(args);
     }

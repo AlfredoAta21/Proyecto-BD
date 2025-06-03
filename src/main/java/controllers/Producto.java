@@ -8,6 +8,7 @@ public class Producto {
     private String descripcion;
     private String categoria;
     private String proveedor;
+    private int disponible;
 
     public Producto(String id, String nombre, double precio, int cantidad, String descripcion, String categoria, String proveedor) {
         this.id = id;
@@ -17,6 +18,7 @@ public class Producto {
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.proveedor = proveedor;
+        this.disponible = cantidad > 0 ? 1 : 0;
     }
 
     // Getters y setters
@@ -27,4 +29,6 @@ public class Producto {
     public String getDescripcion() { return descripcion; }
     public String getCategoria() { return categoria; }
     public String getProveedor() { return proveedor; }
+    public int getDisponible() { return disponible; }
+
 }
