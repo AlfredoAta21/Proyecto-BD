@@ -25,9 +25,8 @@ public class Main extends Application {
             Connection connection = oracleConection.obtenerConexion();
             System.out.println("Conexión exitosa a la base de datos.");
         } catch (SQLException e) {
-            // Manejar excepciones de conexión
             System.err.println("Error al conectar a la base de datos: " + e.getMessage());
-            return; // Salir si no se puede conectar
+            return;
         }
         oracleConection.consultarClientes();
         launch(args);
