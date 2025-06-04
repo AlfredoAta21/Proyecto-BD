@@ -28,10 +28,11 @@
             <Button id="buttonOpciones" mnemonicParsing="false" onAction="#handleAgregarProducto" prefHeight="48.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Producto" />
             <Button id="buttonOpciones" mnemonicParsing="false" onAction="#handleAgregarProvedor" prefHeight="44.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Agregar Proveedor" />
             <Button id="buttonOpciones" mnemonicParsing="false" onAction="#handleAgregarCategoria" prefHeight="44.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Agregar Categoria" />
-            <Button id="buttonOpciones" fx:id="agregarEmpleado" onAction="#handleAgregarEmpleado" mnemonicParsing="false" prefHeight="50.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Agregar Empleado" />
+            <Button id="buttonOpciones" fx:id="agregarEmpleado" mnemonicParsing="false" onAction="#handleAgregarEmpleado" prefHeight="50.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Agregar Empleado" />
             <Pane prefHeight="536.0" prefWidth="225.0">
                <children>
                   <Button id="CerrarSesion" fx:id="cerrarSesion" layoutX="65.0" layoutY="491.0" mnemonicParsing="false" styleClass="CerrarSesion" stylesheets="styles_principal.css" text="Cerrar Sesion" />
+                  <Button id="historialVentas" fx:id="historialVentas" layoutX="-1.0" mnemonicParsing="false" onAction="#handlerHistorialVentas" prefHeight="50.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Historial de ventas" />
                </children>
             </Pane>
          </children>

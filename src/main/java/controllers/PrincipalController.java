@@ -126,6 +126,20 @@ public class PrincipalController {
         }
     }
 
+    @FXML
+    void handlerHistorialVentas(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/historialDeVentas.fxml"));
+            Parent root = loader.load();
+            contenedor.getChildren().clear();
+            contenedor.getChildren().add(root);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+    }
+
+}
+
 
 
 
