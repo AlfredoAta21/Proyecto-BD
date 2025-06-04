@@ -207,6 +207,13 @@ public class GestionarClientesController {
             // Refresh table data
             loadClientes();
 
+            // Clear fields
+            nombre.clear();
+            direccion.clear();
+            telefono.clear();
+            email.clear();
+            tipodeCliente.clear();
+
             // Show success message
             mostrarMensaje("Cliente eliminado exitosamente.");
         } catch (Exception e) {

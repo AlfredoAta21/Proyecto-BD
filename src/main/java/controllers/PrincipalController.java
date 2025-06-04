@@ -46,6 +46,14 @@ public class PrincipalController {
     private void initialize() {
         System.out.println("Controller initialized!");
         obtenerDia();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VentaVista.fxml"));
+            Parent root = loader.load();
+            contenedor.getChildren().clear();
+            contenedor.getChildren().add(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void obtenerDia() {
