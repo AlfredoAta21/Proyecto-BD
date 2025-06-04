@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,12 +13,18 @@ import javafx.scene.layout.*;
 import org.bson.Document;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static BasesDeDatos.OracleConection.obtenerConexion;
 
 public class VentaVistaController {
     @FXML private FlowPane flowPaneProductos;
@@ -143,10 +150,56 @@ public class VentaVistaController {
 
     public void finalizarCompra() {
         if (vboxVenta.getChildren().isEmpty()) {
-            System.out.println("El carrito está vacío. No se puede finalizar la compra.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Carrito vacío", "No hay productos en el carrito para finalizar la compra.");
             return;
         }
 
+        // Obtener lista de clientes desde Oracle
+        List<String> clientes = OracleConection.obtenerNombresClientes();
+
+        // Crear ComboBox y CheckBox
+        ComboBox<String> comboClientes = new ComboBox<>();
+        comboClientes.getItems().addAll(clientes);
+        comboClientes.setPromptText("Seleccione un cliente");
+
+        CheckBox clienteGeneralCheck = new CheckBox("Venta a Cliente General");
+        clienteGeneralCheck.setSelected(true);
+        comboClientes.disableProperty().bind(clienteGeneralCheck.selectedProperty());
+
+        VBox content = new VBox(10, new Label("Seleccione el cliente para la venta:"), comboClientes, clienteGeneralCheck);
+        content.setPadding(new Insets(10));
+
+        Alert clienteAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        clienteAlert.setTitle("Asignar cliente");
+        clienteAlert.setHeaderText("¿A nombre de quién se realiza la venta?");
+        clienteAlert.getDialogPane().setContent(content);
+
+        if (clienteAlert.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+            return;
+        }
+
+        String nombreCliente;
+        if (clienteGeneralCheck.isSelected()) {
+            nombreCliente = "Cliente General";
+        } else {
+            nombreCliente = comboClientes.getValue();
+            if (nombreCliente == null || nombreCliente.trim().isEmpty()) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Cliente no seleccionado", "Debe seleccionar un cliente o marcar la opción 'Cliente General'.");
+                return;
+            }
+        }
+
+        // Confirmar compra
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar compra");
+        confirmacion.setHeaderText("¿Estás seguro de que deseas finalizar la compra?");
+        confirmacion.setContentText("Total a pagar: $" + String.format("%.2f", total));
+
+        if (confirmacion.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+            return;
+        }
+
+        // Procesar productos del carrito
         List<DetalleCompra> detalles = new ArrayList<>();
         double totalCalculado = 0.0;
 
@@ -154,32 +207,33 @@ public class VentaVistaController {
             if (node instanceof HBox hbox) {
                 String nombre = (String) hbox.getUserData();
                 Producto producto = oracleConection.buscarProductoPorNombre(nombre);
-                int cantidad = Integer.parseInt(((Label) hbox.lookup(".cart-qty")).getText());
 
                 if (producto == null) {
-                    System.err.println("Producto no encontrado en la base de datos: " + nombre);
+                    mostrarAlerta(Alert.AlertType.ERROR, "Producto no encontrado", "El producto '" + nombre + "' no se encontró en la base de datos.");
                     continue;
                 }
 
+                int cantidad = Integer.parseInt(((Label) hbox.lookup(".cart-qty")).getText());
                 int stockActual = producto.getCantidad();
-                int nuevoStock = stockActual - cantidad;
 
-                if (nuevoStock < 0) {
-                    System.out.println("No hay suficiente stock para el producto: " + producto.getNombre());
+                if (stockActual < cantidad) {
+                    mostrarAlerta(Alert.AlertType.WARNING, "Stock insuficiente", "No hay suficiente stock para el producto: " + producto.getNombre());
                     continue;
                 }
-                OracleConection.actualizarStock(producto.getId(), nuevoStock);
+
+                OracleConection.actualizarStock(producto.getId(), stockActual - cantidad);
+
                 detalles.add(new DetalleCompra(producto, cantidad));
                 totalCalculado += producto.getPrecio() * cantidad;
             }
         }
 
         if (detalles.isEmpty()) {
-            System.out.println("No se registró la compra. No hay productos válidos.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Compra no registrada", "No se pudo registrar la compra. Verifica el stock o la base de datos.");
             return;
         }
 
-        // Convertir detalles a List<Document> para MongoDB
+        // Construir documentos para MongoDB
         List<Document> productosParaMongo = new ArrayList<>();
         for (DetalleCompra detalle : detalles) {
             Document docProducto = new Document()
@@ -191,15 +245,23 @@ public class VentaVistaController {
             productosParaMongo.add(docProducto);
         }
 
-        String cliente = "";
-        mongoConection.insertarCompra(cliente, totalCalculado, productosParaMongo);
+        mongoConection.insertarCompra(nombreCliente, totalCalculado, productosParaMongo);
 
-        // Limpiar la vista
         vboxVenta.getChildren().clear();
         total = 0;
         totalLabel.setText("$0.00");
 
-        System.out.println("Compra finalizada correctamente.");
+        mostrarAlerta(Alert.AlertType.INFORMATION, "Compra registrada", "La compra fue registrada exitosamente.");
+    }
+
+
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 
 

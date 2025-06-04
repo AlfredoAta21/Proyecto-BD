@@ -51,6 +51,22 @@ public class OracleConection {
         }
     }
 
+    public static List<String> obtenerNombresClientes() {
+        List<String> nombres = new ArrayList<>();
+        String sql = "SELECT nombre FROM TablaClientes";
+
+        try (Connection conn = obtenerConexion();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                nombres.add(rs.getString("nombre"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener nombres de clientes: " + e.getMessage());
+        }
+        return nombres;
+    }
+
     public static List<Producto> obtenerProductos() {
         List<Producto> productos = new ArrayList<>();
 
@@ -137,6 +153,4 @@ public class OracleConection {
 
         return null; // Si no se encuentra el producto
     }
-
-
 }

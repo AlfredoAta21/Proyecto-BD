@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MongoConection {
 
-    private static MongoDatabase database;
+    public static MongoDatabase database;
 
     public static MongoDatabase connect() {
         String user = "administrador";
@@ -99,5 +99,25 @@ public class MongoConection {
             return null;
         }
     }
+
+    public static void actualizarRutaImagen(String rowId, String nuevaRutaImagen) {
+        try {
+            if (database == null) {
+                connect();
+            }
+
+            MongoCollection<Document> coleccionProductos = database.getCollection("productos");
+
+            Document filtro = new Document("oracle_rowid", rowId);
+            Document actualizacion = new Document("$set", new Document("ruta_imagen", nuevaRutaImagen));
+
+            coleccionProductos.updateOne(filtro, actualizacion);
+
+            System.out.println("Ruta de imagen actualizada en MongoDB.");
+        } catch (Exception e) {
+            System.err.println("Error al actualizar la ruta de la imagen: " + e.getMessage());
+        }
+    }
+
 
 }

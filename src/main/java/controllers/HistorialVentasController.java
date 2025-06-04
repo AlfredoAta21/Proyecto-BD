@@ -58,7 +58,7 @@ public class HistorialVentasController {
 
         cargarVentas("");
 
-//        buscarField.setOnKeyReleased(this::buscarVentas);
+        buscarField.setOnKeyReleased(this::buscarVentas);
     }
 
     private void cargarVentas(String filtro) {
@@ -88,14 +88,21 @@ public class HistorialVentasController {
             for (Document producto : productos) {
                 String nombre = producto.getString("nombre");
                 int cantidad = producto.getInteger("cantidad", 1);
+                double precioUnitario = producto.getDouble("precioUnitario");
                 double subtotal = producto.getDouble("subtotal");
 
                 listaDetalles.getItems().add(
-                        String.format("%dx %s - $%.2f", cantidad, nombre, subtotal));
+                        String.format("%dx %s - $%.2f c/u - Subtotal: $%.2f", cantidad, nombre, precioUnitario, subtotal));
             }
         }
 
         labelTotalVenta.setText("Total: $" + String.format("%.2f", venta.getDouble("total")));
+    }
+
+
+    private void buscarVentas(KeyEvent event) {
+        String filtro = buscarField.getText();
+        cargarVentas(filtro);
     }
 
 }
