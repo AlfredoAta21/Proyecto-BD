@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.pool.OracleDataSource;
@@ -71,7 +72,32 @@ public class GestionarProductosController {
         colProveedorProducto.setCellValueFactory(new PropertyValueFactory<>("proveedor"));
 
         tableProductos.setItems(productos);
+        tableProductos.setRowFactory(tv -> new TableRow<Producto>() {
+            @Override
+            protected void updateItem(Producto producto, boolean empty) {
+                super.updateItem(producto, empty);
 
+                if (producto == null || empty) {
+                    setStyle("");
+                } else {
+                    int stock = producto.getCantidad();
+
+                    if (stock == 0) {
+                        // Rojo con texto blanco
+                        setStyle("-fx-background-color: #ff4d4d; -fx-text-fill: white;");
+                        setTextFill(Color.WHITE);
+                    } else if (stock > 0 && stock <= 5) {
+                        // Amarillo con texto negro
+                        setStyle("-fx-background-color: #fff176; -fx-text-fill: black;");
+                        setTextFill(Color.BLACK);
+                    } else {
+                        // Default (blanco)
+                        setStyle("");
+                        setTextFill(Color.BLACK);
+                    }
+                }
+            }
+        });
         connectToDatabase();
         loadCategorias();
         loadProveedores();
