@@ -41,13 +41,14 @@ public class PrincipalController {
 
     @FXML
     private Pane contenedor;
+
     @FXML
     private void initialize() {
         System.out.println("Controller initialized!");
         obtenerDia();
     }
 
-    public void obtenerDia(){
+    public void obtenerDia() {
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dia.setText(localDate.format(formatter));
@@ -67,49 +68,49 @@ public class PrincipalController {
     }
 
     @FXML
-    void handleAgregarProducto(ActionEvent event){
+    void handleAgregarProducto(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionarProductos.fxml"));
             Parent root = loader.load();
             contenedor.getChildren().clear();
             contenedor.getChildren().add(root);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void handleAgregarCategoria(ActionEvent event){
+    void handleAgregarCategoria(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionarCategorias.fxml"));
             Parent root = loader.load();
             contenedor.getChildren().clear();
             contenedor.getChildren().add(root);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void handleAgregarProvedor(ActionEvent event){
+    void handleAgregarProvedor(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionarProveedores.fxml"));
             Parent root = loader.load();
             contenedor.getChildren().clear();
             contenedor.getChildren().add(root);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void handleAgregarEmpleado(ActionEvent event){
+    void handleAgregarEmpleado(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionarEmpleados.fxml"));
             Parent root = loader.load();
             contenedor.getChildren().clear();
             contenedor.getChildren().add(root);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -127,7 +128,7 @@ public class PrincipalController {
     }
 
     @FXML
-    void handlerHistorialVentas(ActionEvent event){
+    void handlerHistorialVentas(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/historialDeVentas.fxml"));
             Parent root = loader.load();
@@ -136,20 +137,24 @@ public class PrincipalController {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+
     }
 
-}
+    @FXML
+    void handlerAgregarCliente(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionarClientes.fxml"));
+            Parent root = loader.load();
+            contenedor.getChildren().clear();
+            contenedor.getChildren().add(root);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-
-
-
-
-
-
-
-
-
-
+    }
 
 }

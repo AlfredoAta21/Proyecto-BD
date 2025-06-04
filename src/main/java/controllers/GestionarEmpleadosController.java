@@ -101,6 +101,7 @@ public class GestionarEmpleadosController {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                System.out.println("Empleado encontrado:" + resultSet.getString("nombre"));
                 empleados.add(new Empleado(
                         resultSet.getString("nombre"),
                         resultSet.getString("direccion"),

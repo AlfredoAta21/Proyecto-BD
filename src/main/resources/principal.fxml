@@ -33,6 +33,7 @@
                <children>
                   <Button id="CerrarSesion" fx:id="cerrarSesion" layoutX="65.0" layoutY="491.0" mnemonicParsing="false" styleClass="CerrarSesion" stylesheets="styles_principal.css" text="Cerrar Sesion" />
                   <Button id="historialVentas" fx:id="historialVentas" layoutX="-1.0" mnemonicParsing="false" onAction="#handlerHistorialVentas" prefHeight="50.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Historial de ventas" />
+                  <Button id="buttonOpciones" fx:id="agregarCliente" layoutX="-1.0" layoutY="61.0" mnemonicParsing="false" onAction="#handlerAgregarCliente" prefHeight="50.0" prefWidth="226.0" styleClass="buttonOpciones" stylesheets="styles_principal.css" text="Agregar Cliente" />
                </children>
             </Pane>
          </children>
